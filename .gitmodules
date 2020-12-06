@@ -1,0 +1,3 @@
+[submodule "idasen-controller"]
+	path = idasen-controller
+	url = https://github.com/rhyst/idasen-controller

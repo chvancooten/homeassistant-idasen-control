@@ -1,0 +1,14 @@
+rest_command:
+  desk_sitting:
+    url: http://yourserver:10453/sit
+  desk_standing:
+    url: http://yourserver:10453/stand
+
+switch:
+  - platform: template
+    switches:
+      desk:
+        turn_on:
+          service: rest_command.desk_standing
+        turn_off:
+          service: rest_command.desk_sitting
