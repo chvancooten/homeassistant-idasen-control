@@ -27,7 +27,7 @@ def get_height_info(height: int):
     standing = not sitting
     return {"height": height, "sitting": sitting, "standing": standing}
 
-@cache.cached(timeout=180) 
+@cache.cached(timeout=180, ) 
 @app.route('/state', methods=['GET'])
 def get_state():
     """
@@ -58,13 +58,14 @@ def set_state():
     if data.get('sit') and data.get('stand'):
         return jsonify(**info, error="What is it? Sit or stand?"), 400
 
-    command, param = "state", ""
     if data.get('height'):
         command, param = "move-to", f"--move-to {data['height']}"
     elif data.get('sit'):
         command, param = "sit", "--sit"
     elif data.get('stand'):
         command, param = "stand", "--stand"
+    else:
+        command, param = "state", ""
     
     try:
         result = subprocess.check_output(f"python3 {script} {param}", shell=True)
@@ -77,6 +78,10 @@ def set_state():
     if not h:
         return jsonify(**info, error="Could not parse height from output", output=str(result)), 500
     height_info = get_height_info(int(h.group(1)))
+
+    # cache is now likely to be incorrect
+    cache.clear() # TODO Improvement: Set cache to state here instead of clearing it
+    
     return jsonify(**info, **height_info, command=command), 200
 
 if __name__ == '__main__':
