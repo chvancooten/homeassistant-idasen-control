@@ -1,4 +1,4 @@
-#!/usr/bin/python3.8
+#!/usr/bin/python3
 import sys
 from flask import Flask, request, jsonify
 from flask_caching import Cache

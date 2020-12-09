@@ -6,8 +6,9 @@ After=network.target
 WantedBy=multi-user.target
 
 [Service]
-User=username
-Group=username
-Environment=FLASK_APP=/home/username/idasen-control/server.py
-ExecStart=/home/username/idasen-control/server.py
+User=cas
+Group=cas
+WorkingDirectory=/home/user/idasen-control
+Environment=FLASK_APP=/home/user/idasen-control/server.py
+ExecStart=/home/user/idasen-control/server.py
 Restart=always
