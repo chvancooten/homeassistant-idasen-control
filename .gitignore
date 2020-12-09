@@ -3,4 +3,4 @@ __pycache__/*
 desk.pickle
 *.legacy
 *.py
-!main.example.py
+!server.py
