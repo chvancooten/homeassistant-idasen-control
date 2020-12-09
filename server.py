@@ -1,10 +1,19 @@
 #!/usr/bin/python3.8
 import sys
 from flask import Flask, request, jsonify
+from flask_caching import Cache
 import subprocess
 import re
 
+config = {
+        "DEBUG": False,
+        "CACHE_TYPE": "simple",
+        "CACHE_DEFAULT_TIMEOUT": 180
+        }
+
 app = Flask(__name__)
+app.config.from_mapping(config)
+cache = Cache(app)
 
 # add config info to the output
 sys.path.append("idasen-controller")
@@ -18,6 +27,7 @@ def get_height_info(height: int):
     standing = not sitting
     return {"height": height, "sitting": sitting, "standing": standing}
 
+@cache.cached(timeout=180) 
 @app.route('/state', methods=['GET'])
 def get_state():
     """
@@ -48,7 +58,7 @@ def set_state():
     if data.get('sit') and data.get('stand'):
         return jsonify(**info, error="What is it? Sit or stand?"), 400
 
-    commandi, param = "state", ""
+    command, param = "state", ""
     if data.get('height'):
         command, param = "move-to", f"--move-to {data['height']}"
     elif data.get('sit'):
