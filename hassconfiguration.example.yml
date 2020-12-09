@@ -35,7 +35,7 @@ switch:
           service: rest_command.sitting_desk
         icon_template: >-
           {% if is_state('switch.standing_desk', 'on') %}
-            hass:arrow-up
+            hass:human-handsdown
           {% else %}
-            hass:arrow-down
+            hass:chair-rolling
           {% endif %}
