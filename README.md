@@ -8,7 +8,7 @@ After installing the Systemd service, make sure to run the following commands.
 
 ```
 sudo systemctl daemon-reload
-sudo systemctl start nginx.service
+sudo systemctl start flask-desk.service
 ```
 
 Requires `Flask` to be installed (on top of the components required by idasen-control).

@@ -8,6 +8,6 @@ WantedBy=multi-user.target
 [Service]
 User=username
 Group=username
-Environment=FLASK_APP=/home/username/idasen-control/main.py
-ExecStart=/home/username/idasen-control/main.py
+Environment=FLASK_APP=/home/username/idasen-control/server.py
+ExecStart=/home/username/idasen-control/server.py
 Restart=always
