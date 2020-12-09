@@ -39,3 +39,8 @@ switch:
           {% else %}
             hass:chair-rolling
           {% endif %}
+
+homeassistant:
+  customize:
+    sensor.desk_height:
+      icon: hass:ruler
