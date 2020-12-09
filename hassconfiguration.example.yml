@@ -30,9 +30,9 @@ switch:
         friendly_name: Standing Desk
         value_template: "{{ is_state_attr('sensor.desk_height', 'position', 'standing') }}"
         turn_on:
-          service: rest_command.standing_desk
+          service: rest_command.desk_sitting
         turn_off:
-          service: rest_command.sitting_desk
+          service: rest_command.desk_standing
         icon_template: >-
           {% if is_state('switch.standing_desk', 'on') %}
             hass:human-handsdown
