@@ -1,14 +1,41 @@
+sensor:
+  - platform: rest
+    resource: http://yourserver:10453/state
+    name: Desk Height
+    timeout: 20
+    unit_of_measurement: cm
+    value_template: "{{ value_json.height / 10 }}"
+    json_attributes:
+      - position
+
 rest_command:
   desk_sitting:
-    url: http://yourserver:10453/sit
+    url: http://yourserver:10453/state
+    method: post
+    timeout: 40
+    content_type: "application/x-www-form-urlencoded"
+    payload: "sit=true"
+    
   desk_standing:
-    url: http://yourserver:10453/stand
+    url: http://yourserver:10453/state
+    method: post
+    timeout: 40
+    content_type: "application/x-www-form-urlencoded"
+    payload: "stand=true"
 
 switch:
   - platform: template
     switches:
-      desk:
+      standing_desk:
+        friendly_name: Standing Desk
+        value_template: "{{ is_state_attr('sensor.desk_height', 'position', 'standing') }}"
         turn_on:
-          service: rest_command.desk_standing
+          service: rest_command.standing_desk
         turn_off:
-          service: rest_command.desk_sitting
+          service: rest_command.sitting_desk
+        icon_template: >-
+          {% if is_state('switch.standing_desk', 'on') %}
+            hass:arrow-up
+          {% else %}
+            hass:arrow-down
+          {% endif %}
